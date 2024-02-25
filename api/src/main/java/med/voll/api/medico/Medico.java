@@ -1,6 +1,7 @@
 package med.voll.api.medico;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import med.voll.api.endereco.Endereco;
 
@@ -27,7 +28,11 @@ public class Medico {
     @Embedded
     private Endereco endereco;
 
+    @NotNull
+    private boolean ativo;
+
     public Medico(DadosCadastroMedico dados) {
+        this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.crm = dados.crm();
@@ -44,5 +49,9 @@ public class Medico {
         }if(dados.endereco() != null) {
             this.endereco.atualizarAdress(dados.endereco());
         }
+    }
+
+    public void delet() {
+        this.ativo = false;
     }
 }
